@@ -1,42 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
     const body = document.querySelector('body');
 
-    let x = -1; 
+    let index = 0;
     const images = [];
     images[0] = "assets/stage1.jpg"
     images[1] = "assets/stage2.jpg"
     images[2] = "assets/stage3.jpg"
     images[3] = "assets/stage4.jpg"
 
-    function plantDying () {
-        x = (x === images.length - 1) ? 0 : x + 1;
-        document.getElementById('img').src = images[x];
-        const crunch = document.getElementById('crunch');
-        crunch.play()
 
-        if (x === 3){
+    function plantDying() {
+        if (index === 3){
             const gameover = document.getElementById('gameover');
-            gameover.play();
-            alert('You let your plant die!');
-            return; 
+            gameover.play(); 
+            alert('Your plant died!');
+            return;
+        } else {
+            index++; 
+            document.getElementById("img").src = images[index]; 
+            const crunch = document.getElementById('crunch');
+            crunch.play(); 
         }
-
     }
-
-    function plantHealing () {
-        x = (x <= 0) ? images.length -1 : x - 1;
-        document.getElementById('img').src = images[x];
-        const water = document.getElementById('water'); 
-        water.play(); 
-    }
-
-    function startTime () {
-        setInterval(plantDying, 4000);
-    }
-
-    //startTime(); 
-
-
 
 
     dragElement(document.getElementById("mydiv"));
@@ -71,16 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
         pos3 = e.clientX;
         pos4 = e.clientY;
         // set the element's new position:
+
         elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
         elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-        //check if watering can collides with plant 
-        //check here if watering can is at same position as plant
-        //if watering can is at same position as plant, invoke planthealing() and play audio of water
-        console.log(elmt.style.top); 
-        // if (elmnt.style.top === "0px" && elmnt.style.left === "0px"){
-            //invoke healing funciton 
-
-        // }
     }
 
     function closeDragElement() {
@@ -90,17 +68,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     }
 
+    function startTime () {
+        setInterval(plantDying, 4000);
+    }
 
-    document.getElementById("start").onclick = startTime (); 
-
- 
-
-
-
+    document.getElementById("start").onclick = startTime; 
 
 
-
-
+    document.getElementById("img").addEventListener('click', function () {
+        if (index >= 1){
+            index--;
+            document.getElementById("img").src = images[index];
+            const water = document.getElementById('water'); 
+            water.play(); 
+            clearInterval(startTime);
+        }
+    });
 
 
 })

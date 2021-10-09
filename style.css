@@ -1,15 +1,19 @@
-#body {
+body {
     background-color: white;
+    height: 500px; 
+    width: 500px; 
 }
 
-/*#board {
+
+/* #board {
     height: 500px; 
     width: 500px; 
     border: 15px lightsalmon;
     position: relative; 
     background-color: white;
-}
-*/
+} */
+
+
 
 
 #mydiv {
